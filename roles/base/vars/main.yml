@@ -1,8 +1,9 @@
 packages:
   base:
     - emacs-nox
-    - zsh
     - fzf
+    - git
+    - zsh
   gui:
     - lxdm
     - i3
