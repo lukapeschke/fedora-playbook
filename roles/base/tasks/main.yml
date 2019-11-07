@@ -5,3 +5,16 @@
     state: latest
     name: "{{ packages.base }}"
   become: true
+
+- name: Create/configure user
+  user:
+    name: "{{ user.name }}"
+    password: "{{ user.password }}"
+    generate_ssh_key: yes
+    ssh_key_bits: 4096
+    ssh_key_file: .ssh/id_rsa
+    ssh_key_passphrase: "{{ user.ssh_passphrase }}"
+    shell: /bin/zsh
+    state: present
+  become: true
+
