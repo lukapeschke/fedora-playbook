@@ -1,0 +1,11 @@
+packages:
+  base:
+    - emacs-nox
+    - zsh
+    - fzf
+  gui:
+    - lxdm
+    - i3
+    - playerctl
+    - brightnessctl
+    - i3lock

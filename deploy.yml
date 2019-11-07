@@ -1,0 +1,8 @@
+#!/usr/bin/env ansible-playbook
+
+- name: Base packages and configuration
+  hosts: all
+  tags:
+    - base
+  roles:
+    - base

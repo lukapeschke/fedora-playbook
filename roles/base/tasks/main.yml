@@ -1,0 +1,7 @@
+- include_vars: main.yml
+
+- name: Installing base packages
+  dnf:
+    state: latest
+    name: "{{ packages.base }}"
+  become: true
