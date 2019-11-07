@@ -19,7 +19,7 @@
     groups: sudo
   become: true
 
-- name: Install oh my zsh for {{ user.name }}
+- name: "Install oh my zsh for {{ user.name }}"
   shell: "sh -c \"$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)\""
   creates: "/home/{{ user.name }}/.oh-my-zsh"
   become_user: "{{ user.name }}"
