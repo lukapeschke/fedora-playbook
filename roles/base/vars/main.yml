@@ -7,8 +7,10 @@ packages:
     - sudo
     - zsh
   gui:
-    - lxdm
-    - i3
-    - playerctl
     - brightnessctl
+    - lxdm
+    - lxterminal
+    - i3
+    - i3blocks
     - i3lock
+    - playerctl

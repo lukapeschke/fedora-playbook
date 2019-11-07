@@ -20,7 +20,34 @@
   become: true
 
 - name: "Install oh my zsh for {{ user.name }}"
-  shell: "sh -c \"$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)\""
+  shell: 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"'
   args:
     creates: "/home/{{ user.name }}/.oh-my-zsh"
   become_user: "{{ user.name }}"
+
+- name: Ensure grub boots in text mode
+  lineinfile:
+    path: /home/lpeschke/test-grub
+    regexp: '^GRUB_GFXPAYLOAD_LINUX='
+    line: 'GRUB_GFXPAYLOAD_LINUX="text"'
+
+- name: "Checking GRUB cmdline"
+  shell: "grep -E 'GRUB_CMDLINE_LINUX=.*systemd.unified_cgroup_hierarchy=0.*' /home/lpeschke/test-grub"
+  register: grub_cfg_grep
+  changed_when: false
+  failed_when: false
+
+- name: Configuring GRUB cmdline
+  replace:
+    path: '/home/lpeschke/test-grub'
+    regexp: '^GRUB_CMDLINE_LINUX="((\w.?)*)"$'
+    replace: 'GRUB_CMDLINE_LINUX="\1 systemd.unified_cgroup_hierarchy=0"'
+  when: "unified_cgroup_hierarchy" not in grub_cfg_grep
+
+# - name: Modify grub defaults to boot with v1 cgroups (required by Docker)
+#   lineinfile:
+#     # path: /etc/default/grub
+#     backrefs: yes
+#     path: /home/lpeschke/test-grub
+#     regexp: '^GRUB_CMDLINE_LINUX='
+#     line: 'GRUB_CMDLINE_LINUX="text"'
