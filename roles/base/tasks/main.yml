@@ -41,8 +41,9 @@
   replace:
     path: '/home/lpeschke/test-grub'
     regexp: '^GRUB_CMDLINE_LINUX="((\w.?)*)"$'
-    replace: 'GRUB_CMDLINE_LINUX="\1 systemd.unified_cgroup_hierarchy=0"'
-  when: "unified_cgroup_hierarchy" not in grub_cfg_grep
+    replace: |
+      GRUB_CMDLINE_LINUX="\1 systemd.unified_cgroup_hierarchy=0"
+  when: '"unified_cgroup_hierarchy" not in grub_cfg_grep'
 
 # - name: Modify grub defaults to boot with v1 cgroups (required by Docker)
 #   lineinfile:
