@@ -16,7 +16,7 @@
     ssh_key_passphrase: "{{ user.ssh_passphrase }}"
     shell: /bin/zsh
     state: present
-    groups: sudo
+    groups: wheel
   become: true
 
 - name: "Install oh my zsh for {{ user.name }}"
