@@ -1,8 +1,10 @@
 packages:
   base:
+    - curl
     - emacs-nox
     - fzf
     - git
+    - sudo
     - zsh
   gui:
     - lxdm

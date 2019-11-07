@@ -9,12 +9,17 @@
 - name: Create/configure user
   user:
     name: "{{ user.name }}"
-    password: "{{ user.password }}"
+    password: "{{ user.password | password_hash('sha512') }}"
     generate_ssh_key: yes
     ssh_key_bits: 4096
     ssh_key_file: .ssh/id_rsa
     ssh_key_passphrase: "{{ user.ssh_passphrase }}"
     shell: /bin/zsh
     state: present
+    groups: sudo
   become: true
 
+- name: Install oh my zsh for {{ user.name }}
+  shell: "sh -c \"$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)\""
+  creates: "/home/{{ user.name }}/.oh-my-zsh"
+  become_user: "{{ user.name }}"
